@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.ssf_workshop16ver2.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,12 @@ public class BoardGameService {
     public Boolean insertGame(JsonObject json){
 
         return bgRepo.insertGame(json);
+        
+    }
+
+    public Optional<String> findGameById(String gid){
+
+        return bgRepo.findGameById(gid);
         
     }
 
