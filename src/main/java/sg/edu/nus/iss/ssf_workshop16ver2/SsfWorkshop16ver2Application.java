@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +21,8 @@ import sg.edu.nus.iss.ssf_workshop16ver2.repositories.BoardGameRepo;
 @SpringBootApplication
 public class SsfWorkshop16ver2Application implements CommandLineRunner{
 
+	private Logger logger = Logger.getLogger(SsfWorkshop16ver2Application.class.getName());
+
 	@Autowired
 	private BoardGameRepo bgRepo;
 
@@ -31,8 +35,14 @@ public class SsfWorkshop16ver2Application implements CommandLineRunner{
 
 		// read game.json file and save to redis
 	
-		File jsonFile = new File("src\\main\\resources\\static\\bgg\\game.json");
+		File jsonFile = new File("./src/main/resources/static/bgg/game.json"); // do not use \\ if deploy to Railway !!!!!
+
+		String path = jsonFile.toPath().toAbsolutePath().toString();
+		logger.log(Level.INFO, "++++++++++++++++ path is: " + path);
+
 		if (jsonFile.exists()) {
+
+			logger.log(Level.INFO, "++++++++++ file exist!!!!!!");
 
 			Reader reader = new BufferedReader(new FileReader(jsonFile));
 			JsonReader jsonReader= Json.createReader(reader);
@@ -42,11 +52,12 @@ public class SsfWorkshop16ver2Application implements CommandLineRunner{
 
 				json = jArray.getJsonObject(i);
 				bgRepo.insertGame(json);
-				
 			}
 
+			logger.log(Level.INFO, "++++++++++ game saved to Redis !!!!!!");
+
 		}else{
-			System.out.println("File not found");
+			logger.log(Level.INFO, "++++++++++ File not found !!!!!!");
 		}
 	}
 

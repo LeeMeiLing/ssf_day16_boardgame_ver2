@@ -2,6 +2,7 @@ package sg.edu.nus.iss.ssf_workshop16ver2.controllers;
 
 import java.io.StringReader;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -25,6 +26,8 @@ import sg.edu.nus.iss.ssf_workshop16ver2.services.BoardGameService;
 @RestController
 @RequestMapping(path = "/api/boardgame", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BoardGameController {
+
+    private Logger logger = Logger.getLogger(BoardGameController.class.getName());
 
     @Autowired
     private BoardGameService bgSvc;
