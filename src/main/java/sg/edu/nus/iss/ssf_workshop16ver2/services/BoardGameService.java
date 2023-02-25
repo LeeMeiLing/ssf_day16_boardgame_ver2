@@ -14,6 +14,7 @@ public class BoardGameService {
     @Autowired
     private BoardGameRepo bgRepo;
 
+    // this method currently used for insert & update game
     public Boolean insertGame(JsonObject json){
 
         return bgRepo.insertGame(json);
